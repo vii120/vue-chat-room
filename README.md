@@ -8,7 +8,7 @@ https://vii120.github.io/vue-chat-room/dist/
 
 ## Intro
 
-使用vue.js結合firebase即時資料庫建立線上聊天室
+使用Vue.js結合Firebase即時資料庫(Realtime Database)來建立線上聊天室
 
 ### 聊天功能
 
