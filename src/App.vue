@@ -38,7 +38,19 @@
           <div class="item"><img src="../static/images/meeting.png">多人會議</div>
         </div>
         <div class="userStatus">
-          <span></span>available
+          <span></span>
+          <div class="statusText" v-show="!showEdit">
+            {{status}}<i class="far fa-edit" @click="editStatus('input')"></i>
+          </div>
+          <div class="editText" v-show="showEdit">
+            <input type="text">
+            <span class="editBtn" @click="editStatus('ok')">
+              <i class="fas fa-check-circle"></i>
+            </span>
+            <span class="editBtn" @click="editStatus('cancel')">
+              <i class="far fa-times-circle"></i>
+            </span>
+          </div>
         </div>
       </div>
       <div class="chatbox">
@@ -68,6 +80,8 @@ export default {
   data () {
     return {
       username: '',
+      status: 'available',
+      showEdit: false,
       tempMsg: '',
       msgCount: 0,
       startChat: false,
@@ -104,6 +118,21 @@ export default {
         chatroomRef.child(timestamp).set(newMsg);
       }
       vm.tempMsg = ''
+    },
+    editStatus(action) {
+      const vm = this;
+      vm.showEdit = true;
+      let statusBox = document.querySelector('.userStatus');
+      let edit = statusBox.querySelector('input');
+      if (action=='input'){
+        edit.value = vm.status;
+      } else if (action=='ok') {
+        vm.showEdit = false;
+        vm.status = edit.value;
+      } else if (action=='cancel') {
+        vm.showEdit = false;
+        return
+      }
     }
   },
   watch: {
@@ -230,7 +259,7 @@ h1{
   background: linear-gradient(#fffffc 10%, #d5d8d1);
   border: 1px solid #d7d9d5;
   border-radius: 4px;
-  cursor: pointer;
+  cursor: default;
 }
 .function-1{
   display: flex;
@@ -239,10 +268,7 @@ h1{
 .function-1 .item{
   display: block;
   padding: 2px 8px;
-  cursor: pointer;
-}
-.function-1 .item:hover{
-  background-color: #dfdfdf;
+  cursor: default;
 }
 .function-1 .item span{
   text-decoration: underline;
@@ -266,7 +292,7 @@ h1{
   display: flex;
   justify-content: space-around;
   align-items: center;
-  cursor: pointer;
+  cursor: default;
 }
 .function-2 .phone:after{
   content: '';
@@ -278,13 +304,9 @@ h1{
 }
 .function-2 .item{
   text-align: center;
-  cursor: pointer;
+  cursor: default;
   width: 58px;
   padding: 6px 0;
-}
-.function-2 .phone:hover,
-.function-2 .item:hover{
-  background-color: #dfdfdf;
 }
 .function-2 .item img{
   display: block;
@@ -296,7 +318,7 @@ h1{
   display: flex;
   align-items: center;
 }
-.userStatus span{
+.userStatus span:first-child{
   display: inline-block;
   width: 12px;
   height: 12px;
@@ -304,6 +326,21 @@ h1{
   border-radius: 50%;
   background-color: #feda16;
   margin-right: 6px;
+}
+.userStatus .fa-edit{
+  margin-left: 8px;
+  color: #555;
+  cursor: pointer;
+}
+.userStatus .editText input{
+  font-size: inherit;
+}
+.userStatus .editText i{
+  display: inline-block;
+  margin-left: 6px;
+  color: #8f8f8f;
+  font-size: 18px;
+  cursor: pointer;
 }
 .chatbox{
   height: 50vh;
@@ -327,13 +364,14 @@ h1{
 }
 .text-function{
   font-size: 24px;
-  padding: 4px 0;
+  padding: 2px 0;
   padding-left: 8px;
+  display: flex;
   user-select: none;
 }
 .text-function span{
-  margin: 0 4px;
-  cursor: pointer;
+  padding: 2px 6px;
+  cursor: default;
 }
 .inputMsg{
   padding: 0 6px;
@@ -362,6 +400,7 @@ h1{
   .function-2 .item{width: 50px;}
   .function-2 .item:nth-child(3),
   .function-2 .item:nth-child(5){display: none;}
+  .userStatus .editText i{font-size: 16px;}
   .chatbox{padding-left: 8px;}
   .text-function{font-size: 18px;}
 }
