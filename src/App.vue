@@ -193,6 +193,9 @@ h1{
   border-radius: 8px;
   background-color: #f4f5eb;
 }
+.boxtop{
+  user-select: none;
+}
 .control{
   display: flex;
   justify-content: space-between;
@@ -303,7 +306,7 @@ h1{
   margin-right: 6px;
 }
 .chatbox{
-  height: 60vh;
+  height: 50vh;
   padding-left: 16px;
   overflow-y: auto;
   border: 1px solid #d7d9d5;
@@ -326,6 +329,7 @@ h1{
   font-size: 24px;
   padding: 4px 0;
   padding-left: 8px;
+  user-select: none;
 }
 .text-function span{
   margin: 0 4px;
